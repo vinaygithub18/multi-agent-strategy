@@ -17,20 +17,21 @@ def scrape_market_news(query: str) -> str:
     headlines = [a.text for a in soup.select("a.DY5T1d")]
     return "\n".join(headlines[:5]) if headlines else "No recent headlines found."
 
-def load_energy_data() -> pd.DataFrame:
-    """Simulates loading energy market data."""
+def load_market_data(topic: str) -> pd.DataFrame:
+    """Simulates loading market data based on topic."""
+    import random
     data = {
         "Month": ["Jan", "Feb", "Mar"],
-        "Price_per_MWh": [75, 80, 78]
+        "Value": [random.randint(50, 100) for _ in range(3)]
     }
     return pd.DataFrame(data)
 
-def generate_chart(df: pd.DataFrame):
-    """Generates a price trend chart and saves it."""
+def generate_chart(df: pd.DataFrame, topic: str):
+    """Generates a market trend chart and saves it."""
     plt.figure(figsize=(5,3))
-    plt.plot(df["Month"], df["Price_per_MWh"], marker='o')
-    plt.title("Renewable Energy Price Trend")
-    plt.ylabel("Price per MWh ($)")
+    plt.plot(df["Month"], df["Value"], marker='o')
+    plt.title(f"{topic} Market Trend")
+    plt.ylabel("Market Value")
     plt.grid(True)
     plt.savefig("chart.png")
     plt.close()
@@ -60,24 +61,27 @@ def researcher_agent(state):
     return {"research_data": news}
 
 def data_analyst_agent(state):
-    df = load_energy_data()
-    generate_chart(df)
-    summary = f"Energy pricing data:\n{df.to_string(index=False)}"
+    topic = state["topic"]
+    df = load_market_data(topic)
+    generate_chart(df, topic)
+    summary = f"{topic} market data:\n{df.to_string(index=False)}"
     return {"data_analysis": summary}
 
 def strategy_agent(state):
+    topic = state["topic"]
     research_data = state["research_data"]
     data_analysis = state["data_analysis"]
 
     prompt = f"""
     You are a market strategist.
+    Topic: {topic}
     Research Data:
     {research_data}
 
     Data Analysis:
     {data_analysis}
 
-    Create a clear, step-by-step market entry strategy for India in renewable energy.
+    Create a clear, step-by-step market entry strategy for {topic}.
     """
     strategy_text = gemini_invoke(prompt)
     return {"strategy": strategy_text}
