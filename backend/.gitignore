@@ -4,3 +4,4 @@ chart.png
 .env
 __pycache__/
 *.pyc
+agents.cpython-*.pyc

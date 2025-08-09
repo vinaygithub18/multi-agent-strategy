@@ -37,14 +37,42 @@ def generate_chart(df: pd.DataFrame, topic: str):
     plt.close()
 
 def create_pdf_report(strategy_text: str):
-    """Creates a PDF report containing the strategy and chart."""
+    """Creates a PDF report with proper formatting."""
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=16)
+    pdf.set_font("Arial", "B", 16)
     pdf.cell(0, 10, "Market Entry Strategy", ln=True)
-    pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, strategy_text)
-    pdf.image("chart.png", x=10, y=80, w=180)
+    pdf.ln(5)
+    
+    lines = strategy_text.split('\n')
+    for line in lines:
+        line = line.strip()
+        if not line:
+            pdf.ln(3)
+            continue
+            
+        # Handle headings
+        if line.startswith('# '):
+            pdf.set_font("Arial", "B", 14)
+            pdf.cell(0, 8, line[2:], ln=True)
+            pdf.ln(2)
+        elif line.startswith('## '):
+            pdf.set_font("Arial", "B", 12)
+            pdf.cell(0, 7, line[3:], ln=True)
+            pdf.ln(2)
+        elif line.startswith('### '):
+            pdf.set_font("Arial", "B", 11)
+            pdf.cell(0, 6, line[4:], ln=True)
+            pdf.ln(1)
+        else:
+            # Clean markdown formatting
+            clean_line = line.replace('**', '').replace('*', '').replace('_', '')
+            pdf.set_font("Arial", "", 10)
+            pdf.multi_cell(0, 5, clean_line)
+            pdf.ln(1)
+    
+    pdf.ln(10)
+    pdf.image("chart.png", x=10, w=180)
     pdf.output("strategy_report.pdf")
 
 # ---------- GEMINI ----------
@@ -82,6 +110,8 @@ def strategy_agent(state):
     {data_analysis}
 
     Create a clear, step-by-step market entry strategy for {topic}.
+    Use proper headings with # and ## for sections.
+    Keep formatting simple and avoid excessive markdown.
     """
     strategy_text = gemini_invoke(prompt)
     return {"strategy": strategy_text}
