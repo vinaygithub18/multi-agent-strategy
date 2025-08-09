@@ -1,3 +1,6 @@
 venv/
 strategy_report.pdf
 chart.png
+.env
+__pycache__/
+*.pyc
