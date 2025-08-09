@@ -1,6 +1,6 @@
 # 📊 Multi-Agent Market Strategy AI
 
-> **Live Demo:** [Streamlit App](https://your-live-demo-link.streamlit.app)  
+> **Live Demo:** [Streamlit App](https://multi-agent-strategy-w4fapgjskzvv2eht7bdwcc.streamlit.app/)  
 > **Author:** Your Name | **Experience:** 2 years Software Engineer | **Focus:** Agentic AI Applications
 
 An **autonomous multi-agent system** that uses **Gemini LLMs** to research, analyze data, and create **professional market entry strategy reports** — complete with charts and downloadable PDFs.
@@ -22,9 +22,9 @@ An **autonomous multi-agent system** that uses **Gemini LLMs** to research, anal
 
 ## 🖼️ Demo Preview
 
-![App Screenshot](samples/app_screenshot.png)
+![App Screenshot](![alt text](image.png))
 
-Sample generated PDF: [View Example](samples/sample_strategy_report.pdf)
+<!-- Sample generated PDF: [View Example](samples/sample_strategy_report.pdf) -->
 
 ---
 
