@@ -22,7 +22,7 @@ An **autonomous multi-agent system** that uses **Gemini LLMs** to research, anal
 
 ## 🖼️ Demo Preview
 
-![App Screenshot](![alt text](image.png))
+![alt text](image.png)
 
 <!-- Sample generated PDF: [View Example](samples/sample_strategy_report.pdf) -->
 
